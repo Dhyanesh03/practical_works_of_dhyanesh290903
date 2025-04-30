@@ -1,0 +1,192 @@
+{
+	"info": {
+		"_postman_id": "8c168dff-b8bb-45fe-b4f0-6e115bad68a5",
+		"name": "CRUDAPP",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "10147392",
+		"_collection_link": "https://test88-3045.postman.co/workspace/test-Workspace~8198ddc3-9283-4e96-b631-1e1055bca690/collection/10147392-8c168dff-b8bb-45fe-b4f0-6e115bad68a5?action=share&source=collection_link&creator=10147392"
+	},
+	"item": [
+		{
+			"name": "GETEMPLOYEELIST",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:8081/api/v1/employees"
+			},
+			"response": []
+		},
+		{
+			"name": "GETEMPLOYEEBYID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:8081/api/v1/employees/3"
+			},
+			"response": []
+		},
+		{
+			"name": "UPDATEMPLOYEE",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 2,\r\n    \"firstName\": \"Sachin\",\r\n    \"lastName\": \"S\",\r\n    \"emailId\": \"sachwin@gmail.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8081/api/v1/employees/2"
+			},
+			"response": []
+		},
+		{
+			"name": "DELETEEMPLOYEE",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "default",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "text"
+						}
+					}
+				},
+				"url": "http://localhost:8081/api/v1/employees/1"
+			},
+			"response": []
+		},
+		{
+			"name": "SAVEMPLOYEE",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 6,\r\n    \"firstName\": \"SaRANYA\",\r\n    \"lastName\": \"S\",\r\n    \"emailId\": \"saranya@gmail.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8081/api/v1/employees"
+			},
+			"response": []
+		},
+		{
+			"name": "SAVEUSERREGISTRATION",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"username\": \"Sayooj\",\r\n\"password\": \"Sayooj@123\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8081/api/v1/employees/register"
+			},
+			"response": []
+		},
+		{
+			"name": "SAVEMPLOYEE",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": ""
+					}
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer daf66e01593f61a15b857cf433aae03a005812b31234e149036bcc8dee755dbb",
+						"type": "default",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"firstName\": \"SaRANYA\",\r\n    \"lastName\": \"S\",\r\n    \"emailId\": \"saranya@gmail.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8081/api/v1/employees"
+			},
+			"response": []
+		},
+		{
+			"name": "LOGIN",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": ""
+					}
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"name\":\"sayooj\",\r\n\"password\":\"sayooj\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8081/api/authenticate/login"
+			},
+			"response": []
+		},
+		{
+			"name": "REGISTRATION",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"name\":\"rajin\",\r\n\"username\":\"rajin\",\r\n\"email\":\"rajn888@gmail.com\",\r\n\"password\": \"rajin\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8081/api/authenticate/register"
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		}
+	]
+}
