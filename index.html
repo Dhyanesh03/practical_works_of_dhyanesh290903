@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 40px; 
+            box-sizing: border-box;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .container {
+            display: flex;
+            gap: 0; /* No space between cards */
+            max-width: 1200px;
+            width: 100%;
+            background-color: transparent;
+            box-sizing: border-box;
+        }
+        .cart-section {
+            flex: 65%; /* Wider Shopping Cart section */
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            background-color: #ffffff; /* Pure white */
+        }
+        .summary-section {
+            flex: 35%; /* Narrower Order Summary section */
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            background-color: #fafafa; /* Slightly off-white */
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .cart-section h2, .summary-section h2 {
+            font-size: 24px;
+            font-weight: bold;
+            margin: 0;
+            color: #333;
+        }
+        .cart-section .items-count {
+            font-size: 18px;
+            color: #252525;
+            font-weight: bold;
+        }
+        .header-line {
+            border-top: 1px solid #ddd; 
+            margin-bottom: 20px;
+        }
+        .cart-headers {
+            display: flex;
+            align-items: center;
+            padding: 10px 0;
+            font-size: 14px;
+            font-weight: bold;
+            color: #666;
+            border-bottom: 1px solid #eee;
+        }
+        .cart-headers .product-details-header {
+            flex: 1;
+            width: 70px;
+            margin-left: 50px; 
+        }
+        .cart-headers .quantity-header {
+            margin: 0 30px;
+            width: 70px; 
+            text-align: center;
+            
+        }
+        .cart-headers .price-header, .cart-headers .total-header {
+            min-width: 80px;
+            text-align: right;
+        }
+        .cart-item {
+            display: flex;
+            align-items: center;
+            padding: 20px 0;
+            border-bottom: 1px solid #eee;
+            gap: 20px;
+        }
+        .cart-item img {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+        .cart-item .details {
+            flex: 1;
+        }
+        .cart-item .details h3 {
+            font-size: 16px;
+            font-weight: bold;
+            margin: 0 0 5px 0;
+            color: #333;
+        }
+        .cart-item .details p {
+            font-size: 14px;
+            color: #666;
+            margin: 0 0 5px 0;
+        }
+        .cart-item .details a.remove {
+            font-size: 14px;
+            color: #007bff;
+            text-decoration: none;
+        }
+        .cart-item .details a.remove:hover {
+            text-decoration: underline;
+        }
+        .cart-item .quantity {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 0 30px;
+        }
+        .cart-item .quantity button {
+            background-color: #f0f0f0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            width: 30px;
+            height: 30px;
+            font-size: 18px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .cart-item .quantity button:hover {
+            background-color: #e0e0e0;
+        }
+        .cart-item .quantity span {
+            font-size: 16px;
+            min-width: 20px;
+            text-align: center;
+        }
+        .cart-item .price, .cart-item .total {
+            font-size: 16px;
+            font-weight: bold;
+            color: #333;
+            min-width: 80px;
+            text-align: right;
+        }
+        .cart-item .total {
+            color: #ff5a5f;
+        }
+        .cart-section .continue-shopping {
+            margin-top: 30px;
+            font-size: 14px;
+            color: #007bff;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .cart-section .continue-shopping:hover {
+            text-decoration: underline;
+        }
+        .summary-section .summary-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px 0;
+            font-size: 16px;
+            color: #333;
+        }
+        .summary-section .summary-row.total {
+            font-weight: bold;
+            font-size: 18px;
+            border-top: 1px solid #eee;
+            padding-top: 20px;
+            margin-top: 20px;
+        }
+        .summary-section select, .summary-section input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+            box-sizing: border-box;
+            background-color: #fff;
+        }
+        .summary-section select {
+            appearance: none;
+            background: url('data:image/svg+xml;utf8,<svg fill="black" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>') no-repeat right 10px center;
+            background-size: 16px;
+        }
+        .summary-section .shipping-section, .summary-section .promo-section {
+            margin: 15px 0;
+        }
+        .summary-section .shipping-section label, .summary-section .promo-section label {
+            display: block;
+            font-size: 16px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        .summary-section .promo-section label {
+            margin-top: 10px;
+            margin-bottom: 0;
+        }
+        .summary-section .apply-btn {
+            background-color: #ff5a5f;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 14px;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        .summary-section .apply-btn:hover {
+            background-color: #e04e52;
+        }
+        .summary-section .checkout-btn {
+            background-color: #6c5ce7;
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+            font-weight: bold;
+            margin-top: 30px;
+        }
+        .summary-section .checkout-btn:hover {
+            background-color: #5a4ad1;
+        }
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+                padding: 20px;
+            }
+            .cart-section, .summary-section {
+                flex: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="cart-section">
+            <div class="header">
+                <h2>Shopping Cart</h2>
+                <div class="items-count">3 Items</div>
+            </div>
+            <div class="header-line"></div>
+
+            <div class="cart-headers">
+                <div class="product-details-header">Product Details</div>
+                <div class="quantity-header">Quantity</div>
+                <div class="price-header">Price</div>
+                <div class="total-header">Total</div>
+            </div>
+
+        
+            <div class="cart-item">
+                <img src="./Images/fifa_19.jpeg" alt="Fifa 19">
+                <div class="details">
+                    <h3>Fifa 19</h3>
+                    <p>PS4</p>
+                    <a href="#" class="remove">Remove</a>
+                </div>
+                <div class="quantity">
+                    <button onclick="updateQuantity(this, -1)">-</button>
+                    <span>2</span>
+                    <button onclick="updateQuantity(this, 1)">+</button>
+                </div>
+                <div class="price">£44.00</div>
+                <div class="total">£88.00</div>
+            </div>
+
+            
+            <div class="cart-item">
+                <img src="./Images/Glacier.jpeg" alt="Glacier White 500GB">
+                <div class="details">
+                    <h3>Glacier White 500GB</h3>
+                    <p>PS4</p>
+                    <a href="#" class="remove">Remove</a>
+                </div>
+                <div class="quantity">
+                    <button onclick="updateQuantity(this, -1)">-</button>
+                    <span>1</span>
+                    <button onclick="updateQuantity(this, 1)">+</button>
+                </div>
+                <div class="price">£249.99</div>
+                <div class="total">£249.99</div>
+            </div>
+
+            <div class="cart-item">
+                <img src="./Images/platium_headset.jpeg" alt="Platinum Headset">
+                <div class="details">
+                    <h3>Platinum Headset</h3>
+                    <p>PS4</p>
+                    <a href="#" class="remove">Remove</a>
+                </div>
+                <div class="quantity">
+                    <button onclick="updateQuantity(this, -1)">-</button>
+                    <span>1</span>
+                    <button onclick="updateQuantity(this, 1)">+</button>
+                </div>
+                <div class="price">£119.99</div>
+                <div class="total">£119.99</div>
+            </div>
+
+            <a href="#" class="continue-shopping">← Continue Shopping</a>
+        </div>
+
+
+        <div class="summary-section">
+            <div class="header">
+                <h2>Order Summary</h2>
+            </div>
+            <div class="header-line"></div>
+
+            <div class="summary-row">
+                <span>ITEMS 3</span>
+                <span>£457.98</span>
+            </div>
+            <div class="shipping-section">
+                <label>SHIPPING</label>
+                <select>
+                    <option>Standard Delivery - £5.00</option>
+                </select>
+            </div>
+            <div class="promo-section">
+                <label>PROMO CODE</label>
+                <input type="text" placeholder="Enter your code">
+                
+                <button class="apply-btn">APPLY</button>
+            </div>
+            <div class="summary-row total">
+                <span>TOTAL COST</span>
+                <span>£462.98</span>
+            </div>
+            <button class="checkout-btn">CHECKOUT</button>
+        </div>
+    </div>
+
+    <script>
+        function updateQuantity(button, change) {
+            const quantitySpan = button.parentElement.querySelector('span');
+            let quantity = parseInt(quantitySpan.textContent);
+            quantity = Math.max(1, quantity + change); 
+            quantitySpan.textContent = quantity;
+
+        
+            const priceElement = button.parentElement.parentElement.querySelector('.price');
+            const totalElement = button.parentElement.parentElement.querySelector('.total');
+            const price = parseFloat(priceElement.textContent.replace('£', ''));
+            totalElement.textContent = `£${(price * quantity).toFixed(2)}`;
+        }
+    </script>
+</body>
+</html>
